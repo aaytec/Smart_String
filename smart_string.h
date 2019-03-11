@@ -1,6 +1,5 @@
 #ifndef SMART_STRING_H
 #define SMART_STRING_H
-
 #include <stdlib.h>
 
 #define DEF_TOKENS_CAP 4
