@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../../smart_string.h"
-
+//#include "catch.hpp"
 
 int main(int argc, char** argv){
 	if(argc < 2){
