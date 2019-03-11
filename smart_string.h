@@ -1,6 +1,6 @@
 #ifndef SMART_STRING_H
 #define SMART_STRING_H
-
+//hi ashay, ima dlete this all
 #include <stdlib.h>
 
 #define DEF_TOKENS_CAP 4
