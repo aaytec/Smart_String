@@ -36,14 +36,14 @@ void *_get_zheader(const smart_zstring s){
 smart_string new_nstring(const char* str, const size_t len){
 	struct _string* s = malloc(sizeof(struct _string) + len + 1);
 	s->size = len;
-	for(int i = 0; i < s->size; i++) { s->str[i] = str[i]; }
+	for(size_t i = 0; i < s->size; i++) { s->str[i] = str[i]; }
 	s->str[s->size] = '\0';
 	return s->str;
 }
 
 smart_string new_string(const char* str){
 	size_t len = 0;
-	for(int i = 0; str[i] != '\0'; i++) { len++; }
+	for(size_t i = 0; str[i] != '\0'; i++) { len++; }
 	return new_nstring(str, len);
 }
 
@@ -70,7 +70,7 @@ smart_string concat_string(smart_string dest, const smart_string src){
 
         struct _string* s = _get_header(dest);
 	s = realloc(s, sizeof(struct _string) + s->size + src_len + 1);
-        for(int i = 0; i < src_len; i++){ s->str[i + s->size] = src[i]; }
+        for(size_t i = 0; i < src_len; i++){ s->str[i + s->size] = src[i]; }
         s->size += src_len;
 	s->str[s->size] = '\0';
 
@@ -79,7 +79,7 @@ smart_string concat_string(smart_string dest, const smart_string src){
 
 smart_string sub_string(const smart_string src, size_t low, size_t high){
 	char* buf = malloc(sizeof(char) + (high - low));
-	for(int i = low; i < high; i++){
+	for(size_t i = low; i < high; i++){
 		buf[i - low] = src[i];
 	}
 	smart_string s = new_nstring(buf, (high - low));
@@ -133,14 +133,14 @@ smart_zstring new_nzstring(const char* str, const size_t len){
 	struct __string* s = malloc(sizeof(struct __string) + capacity + 1);
 	s->size = len;
 	s->capacity = capacity;
-	for(int i = 0; i < s->size; i++) { s->str[i] = str[i]; }
+	for(size_t i = 0; i < s->size; i++) { s->str[i] = str[i]; }
 	s->str[s->size] = '\0';
 	return s->str;
 }
 
 smart_zstring new_zstring(const char* str){
 	size_t len = 0;
-	for(int i = 0; str[i] != '\0'; i++) { len++; }
+	for(size_t i = 0; str[i] != '\0'; i++) { len++; }
 	return new_nzstring(str, len);
 }
 
@@ -172,7 +172,7 @@ smart_zstring concat_zstring(smart_zstring dest, const smart_zstring src){
 	}
 
 	struct __string* s = _get_zheader(dest);
-	for(int i = 0; i < src_len; i++){
+	for(size_t i = 0; i < src_len; i++){
 		if(s->size == s->capacity){ s = realloc_zstring(s); }
 		s->str[s->size++] = src[i];
 	}
@@ -183,7 +183,7 @@ smart_zstring concat_zstring(smart_zstring dest, const smart_zstring src){
 
 smart_zstring sub_zstring(const smart_zstring src, const size_t low, const size_t high){
 	char* buf = malloc(sizeof(char) + (high - low));
-	for(int i = low; i < high; i++){
+	for(size_t i = low; i < high; i++){
 		buf[i - low] = src[i];
 	}
 	smart_zstring s = new_nzstring(buf, (high - low));
