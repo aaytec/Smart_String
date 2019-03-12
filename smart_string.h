@@ -7,6 +7,8 @@
 typedef char* smart_string;
 typedef char* smart_zstring;
 
+typedef char** smart_tokens;
+
 struct _string{
 	size_t size;
 	char str[];
@@ -16,6 +18,11 @@ struct __string{
 	size_t size;
 	size_t capacity;
 	char str[];
+};
+
+struct _tokens{
+	size_t size;
+	char* token[];
 };
 
 void* _get_header(const smart_string s){
@@ -28,6 +35,17 @@ void *_get_zheader(const smart_zstring s){
 	void *_s = s;
 	_s -= sizeof(struct __string);
 	return _s;
+}
+
+void* _get_theader(const smart_tokens t){
+	void* _t = t;
+	_t -= sizeof(struct _tokens);
+	return _t;
+}
+
+size_t getlen_tokens(const smart_tokens t){
+	struct _tokens* _t = (struct _tokens* )_get_theader(t);
+	return _t->size;
 }
 
 /* SMART_STRING */
@@ -57,39 +75,37 @@ size_t getlen_string(const smart_string str){
 }
 
 smart_string copy_string(const smart_string src){
-        size_t src_len = getlen_string(src);
-        return new_nstring(src, src_len);
+    size_t src_len = getlen_string(src);
+	return new_nstring(src, src_len);
 }
 
 smart_string concat_string(smart_string dest, const smart_string src){
-        size_t src_len = getlen_string(src);
-        if(src_len == 0){
-                return dest;
+	size_t src_len = getlen_string(src);
+    if(src_len == 0){
+        return dest;
 	}
 
-        struct _string* s = _get_header(dest);
+    struct _string* s = _get_header(dest);
 	s = realloc(s, sizeof(struct _string) + s->size + src_len + 1);
-        for(size_t i = 0; i < src_len; i++){ s->str[i + s->size] = src[i]; }
-        s->size += src_len;
+    for(size_t i = 0; i < src_len; i++){ s->str[i + s->size] = src[i]; }
+    s->size += src_len;
 	s->str[s->size] = '\0';
 
-        return s->str;
+    return s->str;
 }
 
 smart_string sub_string(const smart_string src, size_t low, size_t high){
 	char* buf = malloc(sizeof(char) + (high - low));
-	for(size_t i = low; i < high; i++){
-		buf[i - low] = src[i];
-	}
+	for(size_t i = low; i < high; i++){ buf[i - low] = src[i]; }
 	smart_string s = new_nstring(buf, (high - low));
 	free(buf);
 	return s;
 }
 
-smart_string* tokenize_string(const smart_string src, char delim, size_t* amount){
+smart_tokens tokenize_string(const smart_string src, char delim, size_t* amount){
 	size_t capacity = DEF_TOKENS_CAP;
 	size_t count = 0;
-	smart_string* tokens = malloc(sizeof(smart_string) * capacity);
+	struct _tokens* tokens = malloc(sizeof(struct _tokens) + sizeof(smart_string) * capacity);
 	
 	ssize_t low = -1;
 	ssize_t high = -1;
@@ -101,9 +117,9 @@ smart_string* tokenize_string(const smart_string src, char delim, size_t* amount
 			smart_string token = sub_string(src, low, high);
 			if(count == capacity){
 				capacity *= 2;
-				tokens = realloc(tokens, sizeof(smart_string) * capacity);
+				tokens = realloc(tokens, sizeof(struct _tokens) + sizeof(smart_string) * capacity);
 			}
-			tokens[count++] = token;
+			tokens->token[count++] = token;
 			low = -1;
 			high = -1;
 		}
@@ -115,13 +131,22 @@ smart_string* tokenize_string(const smart_string src, char delim, size_t* amount
 		smart_string token = sub_string(src, low, high);
 		if(count == capacity){
 			capacity *= 2;
-			tokens = realloc(tokens, sizeof(smart_string) * capacity);
+			tokens = realloc(tokens, sizeof(struct _tokens) + sizeof(smart_string) * capacity);
 		}
-		tokens[count++] = token;
+		tokens->token[count++] = token;
 	}
 
 	*amount = count;
-	return tokens;
+	tokens->size = count;
+	return tokens->token;
+}
+
+void delete_tokens(smart_tokens t){
+	size_t count = getlen_tokens(t);
+	for(size_t i = 0; i < count; i++){
+			delete_string(t[i]);
+	}
+	free(_get_theader(t));
 }
 
 /* SMART_ZSTRING */
@@ -182,18 +207,16 @@ smart_zstring concat_zstring(smart_zstring dest, const smart_zstring src){
 
 smart_zstring sub_zstring(const smart_zstring src, const size_t low, const size_t high){
 	char* buf = malloc(sizeof(char) + (high - low));
-	for(size_t i = low; i < high; i++){
-		buf[i - low] = src[i];
-	}
+	for(size_t i = low; i < high; i++){ buf[i - low] = src[i]; }
 	smart_zstring s = new_nzstring(buf, (high - low));
 	free(buf);
 	return s;
 }
 
-smart_zstring* tokenize_zstring(const smart_zstring src, char delim, size_t* amount){
+smart_tokens tokenize_zstring(const smart_zstring src, char delim, size_t* amount){
 	size_t capacity = DEF_TOKENS_CAP;
 	size_t count = 0;
-	smart_zstring* tokens = malloc(sizeof(smart_zstring) * capacity);
+	struct _tokens* tokens = malloc(sizeof(struct _tokens) + sizeof(smart_zstring) * capacity);
 	
 	ssize_t low = -1;
 	ssize_t high = -1;
@@ -205,9 +228,9 @@ smart_zstring* tokenize_zstring(const smart_zstring src, char delim, size_t* amo
 			smart_zstring token = sub_zstring(src, low, high);
 			if(count == capacity){
 				capacity *= 2;
-				tokens = realloc(tokens, sizeof(smart_zstring) * capacity);
+				tokens = realloc(tokens, sizeof(struct _tokens) + sizeof(smart_zstring) * capacity);
 			}
-			tokens[count++] = token;
+			tokens->token[count++] = token;
 			low = -1;
 			high = -1;
 		}
@@ -219,13 +242,22 @@ smart_zstring* tokenize_zstring(const smart_zstring src, char delim, size_t* amo
 		smart_zstring token = sub_zstring(src, low, high);
 		if(count == capacity){
 			capacity *= 2;
-			tokens = realloc(tokens, sizeof(smart_zstring) * capacity);
+			tokens = realloc(tokens, sizeof(struct _tokens) + sizeof(smart_zstring) * capacity);
 		}
-		tokens[count++] = token;
+		tokens->token[count++] = token;
 	}
 
 	*amount = count;
-	return tokens;
+	tokens->size = count;
+	return tokens->token;
+}
+
+void delete_ztokens(smart_tokens t){
+	size_t count = getlen_tokens(t);
+	for(size_t i = 0; i < count; i++){
+			delete_zstring(t[i]);
+	}
+	free(_get_theader(t));
 }
 
 #endif
