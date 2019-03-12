@@ -174,8 +174,15 @@ void delete_zstring(smart_zstring str){
 }
 
 struct __string* realloc_zstring(struct __string* s){
-	s->capacity *= 2;
-	return realloc(s, sizeof(struct __string) + s->capacity + 1);
+	struct __string* temp = realloc(s, sizeof(struct __string) + s->capacity + 1);
+	// realloc failure
+	if (temp == NULL) {
+		return s;
+	}
+	else {
+		s->capacity *= 2;
+		return temp;
+	}
 }
 
 size_t getlen_zstring(const smart_zstring str)
