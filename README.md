@@ -18,4 +18,7 @@ from_string
 sprintf like fn
 insert_at
 reverse
+pad_with
+replace
+replace_all
 
