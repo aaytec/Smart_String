@@ -112,7 +112,7 @@ smart_tokens tokenize_string(const smart_string src, char delim, size_t* amount)
 	size_t size = getlen_string(src);
 
 	for(size_t i = 0; i < size; i++){
-		if((src[i] == delim || src[i] == '\n' || src[i] == ' ') && low >= 0){
+		if((src[i] == delim || src[i] == '\n') && low >= 0){
 			high = i;
 			smart_string token = sub_string(src, low, high);
 			if(count == capacity){
@@ -123,7 +123,7 @@ smart_tokens tokenize_string(const smart_string src, char delim, size_t* amount)
 			low = -1;
 			high = -1;
 		}
-		else if (src[i] != delim && src[i] != '\n' && src[i] != ' ' && low < 0){ low = i; }
+		else if (src[i] != delim && src[i] != '\n' && low < 0){ low = i; }
 	}
 
 	if(low >= 0){
@@ -223,7 +223,7 @@ smart_tokens tokenize_zstring(const smart_zstring src, char delim, size_t* amoun
 	size_t size = getlen_zstring(src);
 
 	for(size_t i = 0; i < size; i++){
-		if((src[i] == delim || src[i] == '\n' || src[i] == ' ') && low >= 0){
+		if((src[i] == delim || src[i] == '\n') && low >= 0){
 			high = i;
 			smart_zstring token = sub_zstring(src, low, high);
 			if(count == capacity){
@@ -234,7 +234,7 @@ smart_tokens tokenize_zstring(const smart_zstring src, char delim, size_t* amoun
 			low = -1;
 			high = -1;
 		}
-		else if (src[i] != delim && src[i] != '\n' && src[i] != ' ' && low < 0){ low = i; }
+		else if (src[i] != delim && src[i] != '\n' && low < 0){ low = i; }
 	}
 
 	if(low >= 0){

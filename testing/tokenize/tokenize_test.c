@@ -13,4 +13,5 @@ int main(int argc, char** argv){
     }
 
     delete_ztokens(tokens);
+    delete_zstring(str);
 }
