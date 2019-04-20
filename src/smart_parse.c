@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "smart_parse.h"
 #include <stdlib.h>
 
@@ -136,4 +135,3 @@ void delete_st(smart_tok t){
 	}
 	free(_get_stheader(t));
 }
->>>>>>> 5239bbcf657b34b08c4a61c9e654d788d355e6d1
