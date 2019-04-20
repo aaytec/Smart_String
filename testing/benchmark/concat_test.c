@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "../../smart_string.h"
+#include <stdlib.h>
+#include "../../src/smart_string.h"
 //#include "catch.hpp"
 
 int main(int argc, char** argv){
 	if(argc < 2){
+		printf("Usage : ./concat_test <num>\n");
 		return 0;
 	}
 
@@ -24,5 +26,5 @@ int main(int argc, char** argv){
 
 	delete_ss(buf);
 	delete_ss(buf2);
-        return 0;
+	return 0;
 }
