@@ -23,8 +23,8 @@ smart_str reverse_ss(smart_str str){
 smart_str to_upper_ss(smart_str str){
   size_t size = getlen_ss(str);
   for(size_t i = 0; i < size; i++){
-    if(*str[i] >= LOWER_MIN && *str[i] <= LOWER_MAX){
-      *str[i] -= UPPER_LOWER_DIFF;
+    if(*(str[i]) >= LOWER_MIN && *(str[i]) <= LOWER_MAX){
+      *(str[i]) -= UPPER_LOWER_DIFF;
     }
   }
   return str;
@@ -33,8 +33,8 @@ smart_str to_upper_ss(smart_str str){
 smart_str to_lower_ss(smart_str str){
   size_t size = getlen_ss(str);
   for(size_t i = 0; i < size; i++){
-    if(*str[i] >= UPPER_MIN && *str[i] <= UPPER_MAX){
-      *str[i] += UPPER_LOWER_DIFF;
+    if(*(str[i]) >= UPPER_MIN && *(str[i]) <= UPPER_MAX){
+      *(str[i]) += UPPER_LOWER_DIFF;
     }
   }
   return str;
@@ -52,7 +52,7 @@ smart_str insert_at_ss(smart_str str, const char* insert, size_t idx){
     smart_str lhs = substr_ss(str, 0, idx);
     smart_str rhs = substr_ss(str, idx, size);
     lhs = concat_cstr_ss(lhs, insert);
-    lhs = concat_ss(rhs);
+    lhs = concat_ss(lhs, rhs);
     delete_ss(rhs);
     delete_ss(str);
     return lhs;

@@ -1,5 +1,5 @@
-#ifndef SMART_STRING_H
-#define SMART_STRING_H
+#ifndef SMART_MANIP_H
+#define SMART_MANIP_H
 #include "smart_string.h"
 
 smart_str reverse_ss(smart_str str);
