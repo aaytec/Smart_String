@@ -9,7 +9,7 @@ struct _tokens{
 	char* token[];
 };
 
-void* _get_stheader(const smart_tok t){
+static inline void* _get_stheader(const smart_tok t){
 	void* _t = t;
 	_t -= sizeof(struct _tokens);
 	return _t;
@@ -54,7 +54,7 @@ smart_tok tokenize_ss(const smart_str src, char delim, size_t* amount){
 	return tokens->token;
 }
 
-size_t getlen_st(const smart_tok t){
+size_t inline getlen_st(const smart_tok t){
 	struct _tokens* _t = (struct _tokens* )_get_stheader(t);
 	return _t->size;
 }
