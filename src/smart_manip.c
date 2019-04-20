@@ -23,8 +23,8 @@ smart_str reverse_ss(smart_str str){
 smart_str to_upper_ss(smart_str str){
   size_t size = getlen_ss(str);
   for(size_t i = 0; i < size; i++){
-    if(*(str[i]) >= LOWER_MIN && *(str[i]) <= LOWER_MAX){
-      *(str[i]) -= UPPER_LOWER_DIFF;
+    if(str[i] >= LOWER_MIN && str[i] <= LOWER_MAX){
+      str[i] -= UPPER_LOWER_DIFF;
     }
   }
   return str;
@@ -33,8 +33,8 @@ smart_str to_upper_ss(smart_str str){
 smart_str to_lower_ss(smart_str str){
   size_t size = getlen_ss(str);
   for(size_t i = 0; i < size; i++){
-    if(*(str[i]) >= UPPER_MIN && *(str[i]) <= UPPER_MAX){
-      *(str[i]) += UPPER_LOWER_DIFF;
+    if(str[i] >= UPPER_MIN && str[i] <= UPPER_MAX){
+      str[i] += UPPER_LOWER_DIFF;
     }
   }
   return str;
