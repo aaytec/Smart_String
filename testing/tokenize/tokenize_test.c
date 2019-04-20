@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../../src/smart_string.h"
+#include "../../src/smart_parse.h"
 
 int main(int argc, char** argv){
     smart_str str = new_ss("bcvggahk,  qbjrwvzfhsfifly,    bz,gaspdar\n\nusjitqrmhizqkmofmw,,qcjtolcdddeoht\neyjgbdcrzs,  jcpivvnziprpziokrxkvjt\nlfamwhyw,lojdhya,ncpcdvkgvcmgxjmae\nyynakdsfykrciey,rjibtevi,elpqxuwvh\n");
