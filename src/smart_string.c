@@ -94,7 +94,7 @@ smart_str concat_ss(smart_str dest, const smart_str src){
 	return s->str;
 }
 
-smart_str sub_ss(const smart_str src, const size_t low, const size_t high){
+smart_str substr_ss(const smart_str src, const size_t low, const size_t high){
 	char* buf = malloc(sizeof(char) + (high - low));
 	for(size_t i = low; i < high; i++){ buf[i - low] = src[i]; }
 	smart_str s = new_n_ss(buf, (high - low));
@@ -114,7 +114,7 @@ smart_tok tokenize_ss(const smart_str src, char delim, size_t* amount){
 	for(size_t i = 0; i < size; i++){
 		if((src[i] == delim || src[i] == '\n') && low >= 0){
 			high = i;
-			smart_str token = sub_ss(src, low, high);
+			smart_str token = substr_ss(src, low, high);
 			if(count == capacity){
 				capacity *= 2;
 				tokens = realloc(tokens, sizeof(struct _tokens) + sizeof(smart_str) * capacity);
@@ -128,7 +128,7 @@ smart_tok tokenize_ss(const smart_str src, char delim, size_t* amount){
 
 	if(low >= 0){
 		high = size;
-		smart_str token = sub_ss(src, low, high);
+		smart_str token = substr_ss(src, low, high);
 		if(count == capacity){
 			capacity *= 2;
 			tokens = realloc(tokens, sizeof(struct _tokens) + sizeof(smart_str) * capacity);
