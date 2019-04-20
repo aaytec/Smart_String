@@ -1,9 +1,8 @@
 # Smart_String
 
-implement: (prefix fn with smart_string/ss)
+TODO List: (postfix fn with ss)
 Header files:
 + smart_string.h
-	- compare
 	- compare_ignore_case
 
 + smart_parse.h
@@ -20,13 +19,9 @@ Header files:
 	- from_string
 	
 + smart_manip.h
-	- insert_at
-	- reverse
 	- pad_with
 	- replace
 	- replace_all
-	- to_lower_case
-	- to_upper_case
 	- trim
 
 
