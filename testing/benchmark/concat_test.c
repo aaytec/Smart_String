@@ -8,21 +8,21 @@ int main(int argc, char** argv){
 		return 0;
 	}
 
-	smart_zstring buf = new_zstring("The Following is being concatinated: ");
-	smart_zstring buf2 = new_zstring("x");
+	smart_str buf = new_ss("The Following is being concatinated: ");
+	smart_str buf2 = new_ss("x");
 
 	// printf("Before concat:\n");
-	// printf("buf = %s, size = %lu\n", buf, getlen_zstring(buf));	
+	// printf("buf = %s, size = %lu\n", buf, getlen_zstring(buf));
 	// printf("buf2 = %s, size = %lu\n", buf2, getlen_zstring(buf2));
-	
+
 	for(int i = 0; i < atoi(argv[1]); i++){
-		buf = concat_zstring(buf, buf2);
+		buf = concat_ss(buf, buf2);
 	}
 
 	// printf("buf = %s, size = %lu\n", buf, getlen_zstring(buf));
 	// printf("buf2 = %s, size = %lu\n", buf2, getlen_zstring(buf2));
 
-	delete_zstring(buf);
-	delete_zstring(buf2);
+	delete_ss(buf);
+	delete_ss(buf2);
         return 0;
-}    
+}

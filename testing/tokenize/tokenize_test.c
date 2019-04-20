@@ -4,14 +4,14 @@
 #include "../../smart_string.h"
 
 int main(int argc, char** argv){
-    smart_zstring str = new_zstring("bcvggahk,  qbjrwvzfhsfifly,    bz,gaspdar\nusjitqrmhizqkmofmw,qcjtolcdddeoht\neyjgbdcrzs,  jcpivvnziprpziokrxkvjt\nlfamwhyw,lojdhya,ncpcdvkgvcmgxjmae\nyynakdsfykrciey,rjibtevi,elpqxuwvh\n");
+    smart_str str = new_ss("bcvggahk,  qbjrwvzfhsfifly,    bz,gaspdar\n\nusjitqrmhizqkmofmw,,qcjtolcdddeoht\neyjgbdcrzs,  jcpivvnziprpziokrxkvjt\nlfamwhyw,lojdhya,ncpcdvkgvcmgxjmae\nyynakdsfykrciey,rjibtevi,elpqxuwvh\n");
     size_t count;
-    smart_tokens tokens = tokenize_zstring(str, ',', &count);
+    smart_tok tokens = tokenize_ss(str, ',', &count);
     printf("count = %ld\n", count);
     for(size_t i = 0; i < count; i++){
         printf("token[%ld] = %s\n", i, tokens[i]);
     }
 
-    delete_ztokens(tokens);
-    delete_zstring(str);
+    delete_st(tokens);
+    delete_ss(str);
 }

@@ -9,22 +9,22 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    smart_string buf = new_string("The Following is being concatinated:\n");
-    smart_string buf2 = new_string("x");
+    smart_str buf = new_ss("The Following is being concatinated:\n");
+    smart_str buf2 = new_ss("x");
 
-    // printf("Before concat:\n");
-    // printf("buf = %s, size = %lu\n", buf, getlen_string(buf));
-    // printf("buf2 = %s, size = %lu\n", buf2, getlen_string(buf2));
+    printf("Before concat:\n");
+    printf("buf = %s, size = %lu\n", buf, getlen_ss(buf));
+    printf("buf2 = %s, size = %lu\n", buf2, getlen_ss(buf2));
 
     for (int i = 0; i < atoi(argv[1]); i++)
     {
-        buf = concat_string(buf, buf2);
+        buf = concat_ss(buf, buf2);
     }
 
-    // printf("buf = %s, size = %lu\n", buf, getlen_string(buf));
-    // printf("buf2 = %s, size = %lu\n", buf2, getlen_string(buf2));
+    printf("buf = %s, size = %lu\n", buf, getlen_ss(buf));
+    printf("buf2 = %s, size = %lu\n", buf2, getlen_ss(buf2));
 
-    delete_string(buf);
-    delete_string(buf2);
+    delete_ss(buf);
+    delete_ss(buf2);
     return 0;
 }
